@@ -910,6 +910,14 @@
       .replace(/'/g, '&#039;');
   }
 
+  // Event listener for mock preview generation
+  window.addEventListener('render-mock-queue', (e) => {
+    if (e.detail && Array.isArray(e.detail)) {
+      queue = e.detail;
+      renderQueue();
+    }
+  });
+
   // Kickstart on DOM ready
   document.addEventListener('DOMContentLoaded', init);
 })();

@@ -8,6 +8,12 @@
 
 ---
 
+## 📸 Demonstração da Interface
+
+![Interface do MKV2MP4](assets/preview.png)
+
+---
+
 ## 🚀 Principais Recursos
 
 - **Remux Sem Perda de Qualidade (Ultra-Rápido):** Converte contêineres MKV para MP4 em segundos via `-c copy` quando os codecs forem compatíveis (H.264/H.265 + AAC/AC3/MP3).

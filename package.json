@@ -1,0 +1,70 @@
+{
+  "name": "mkv2mp4",
+  "version": "1.0.0",
+  "description": "Conversor rápido e moderno de vídeos MKV para MP4 para Windows",
+  "main": "main.js",
+  "author": "MKV2MP4 Contributors",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win",
+    "build:installer": "electron-builder --win nsis",
+    "build:portable": "electron-builder --win portable"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "ffprobe-static": "^3.1.0"
+  },
+  "devDependencies": {
+    "electron": "^33.3.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.mkv2mp4.app",
+    "productName": "MKV2MP4",
+    "directories": {
+      "output": "dist"
+    },
+    "asar": true,
+    "asarUnpack": [
+      "**/node_modules/ffmpeg-static/**",
+      "**/node_modules/ffprobe-static/**"
+    ],
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "package.json",
+      "node_modules/ffmpeg-static/**/*",
+      "node_modules/ffprobe-static/**/*"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "MKV2MP4",
+      "artifactName": "MKV2MP4-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "MKV2MP4-${version}-portable.${ext}"
+    }
+  }
+}

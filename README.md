@@ -1,4 +1,4 @@
-# MKV2MP4 — Conversor de Vídeos Ultra-Rápido
+# mkv2mp4 — Conversor de Vídeos Ultra-Rápido
 
 [![GitHub Release](https://img.shields.io/github/v/release/diogold01/mkv2mp4?style=flat-square&color=6366f1)](https://github.com/diogold01/mkv2mp4/releases)
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows%20x64-blue?style=flat-square&logo=windows)](https://github.com/diogold01/mkv2mp4/releases)

@@ -1,105 +1,43 @@
-# mkv2mp4 — Conversor de Vídeos Ultra-Rápido
+# mkv2mp4
 
-[![GitHub Release](https://img.shields.io/github/v/release/diogold01/mkv2mp4?style=flat-square&color=6366f1)](https://github.com/diogold01/mkv2mp4/releases)
-[![Platform: Windows](https://img.shields.io/badge/Platform-Windows%20x64-blue?style=flat-square&logo=windows)](https://github.com/diogold01/mkv2mp4/releases)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
+Aplicação desktop para Windows que converte arquivos `.mkv` para `.mp4` usando FFmpeg e FFprobe embutidos. O programa inspeciona cada arquivo para aplicar remux direto sem perda de qualidade (`-c copy`) quando os codecs são compatíveis, ou converter apenas faixas de áudio incompatíveis (DTS, FLAC, Opus) para AAC preservando o vídeo original.
 
-> Aplicação desktop para Windows focada na conversão ágil e inteligente de contêineres MKV para MP4, com suporte a remux sem perda de qualidade, suporte a Dual Áudio com seleção de faixas, re-encode seletivo e interface moderna em tema escuro.
+![Interface do mkv2mp4](assets/preview.png)
 
----
+## Como funciona
 
-## 📸 Demonstração da Interface
+Os arquivos podem ser adicionados arrastando para a janela ou pelo seletor múltiplo. Antes da conversão, o FFprobe lista as faixas de áudio e legenda de cada vídeo para que o usuário escolha o que manter ou descartar (útil em arquivos dual áudio). Se faixas incompatíveis forem desmarcadas e restarem apenas codecs aceitos pelo contêiner MP4 (H.264/H.265 com AAC, AC3 ou MP3), a conversão ocorre por remux direto. Quando a recodificação completa é necessária ou selecionada, o vídeo é convertido para H.264 + AAC com opções de CRF (`18`, `23`, `28`) e preset (`fast`, `medium`, `slow`).
 
-![Interface do MKV2MP4](assets/preview.png)
+Legendas em texto são convertidas para `mov_text`, e legendas de imagem (PGS/VobSub) são sinalizadas e ignoradas para evitar falha no empacotamento MP4. A fila executa de 1 a 3 arquivos simultâneos exibindo progresso, velocidade e tempo restante estimado. Também há escolha de pasta de saída, renomeação ou sobrescrita de arquivos existentes, notificação ao término da fila e exclusão opcional do `.mkv` original mediante confirmação. As preferências são salvas em JSON no diretório `userData` do sistema.
 
----
+## Stack
 
-## 🚀 Principais Recursos
+Desenvolvido em Electron (`contextIsolation: true`, `nodeIntegration: false`), Node.js (`child_process.spawn`), HTML, CSS e JavaScript puro. Os binários do FFmpeg e FFprobe são empacotados via `ffmpeg-static` e `ffprobe-static` com `asarUnpack`, dispensando instalação separada pelo usuário.
 
-- **Remux Sem Perda de Qualidade (Ultra-Rápido):** Converte contêineres MKV para MP4 em segundos via `-c copy` quando os codecs forem compatíveis (H.264/H.265 + AAC/AC3/MP3).
-- **🎛️ Suporte a Dual Áudio e Seleção de Faixas:**
-  - Inspeciona todas as faixas de áudio e legendas de cada arquivo MKV via FFprobe.
-  - Permite escolher exatamente quais faixas de áudio manter (ideal para remover a faixa em inglês ou japonês de vídeos Dual Áudio e manter apenas o áudio dublado, ou vice-versa).
-  - **Otimização Remux Turbo:** Se o arquivo tiver um áudio DTS e um áudio AAC, ao desmarcar o áudio DTS o aplicativo promove automaticamente a conversão para Remux direto (`-c copy`) instantâneo!
-- **Detecção Inteligente Automática:** Inspeciona o arquivo de entrada com o FFprobe integrado. Se o vídeo for compatível mas o áudio incompatível (ex.: DTS, FLAC, Opus), converte apenas as faixas de áudio para AAC mantendo o vídeo em cópia direta.
-- **Re-encode H.264 Universal:** Para vídeos incompatíveis ou quando selecionado, recodifica com seletor de qualidade CRF (18, 23 ou 28) e presets (`fast`, `medium`, `slow`).
-- **Gerenciamento de Legendas:** Converte legendas em texto para o formato nativo `mov_text` do MP4 e descarta com segurança legendas em bitmap (PGS/VobSub) para prevenir falhas de contêiner.
-- **Progresso Real e Preciso:** Monitoramento via stream `-progress pipe:1` com velocidade de processamento (x), tempo restante estimado (ETA) e barra de progresso geral.
-- **Conversões Simultâneas:** Suporte a 1 (sequencial), 2 ou 3 conversões em paralelo.
-- **Tratamento de Conflitos:** Escolha entre renomear automaticamente (`video (1).mp4`) ou sobrescrever arquivos existentes.
-- **Notificações Nativas do Windows:** Alerta sonoro e visual ao término de todas as conversões na fila.
-- **Exclusão Segura do Original:** Opção com diálogo de confirmação para remover o arquivo MKV original após sucesso.
-- **Binários Embutidos:** FFmpeg e FFprobe integrados via `ffmpeg-static` e `ffprobe-static` sem necessidade de qualquer instalação prévia pelo usuário.
+## Download
 
----
+Os executáveis para Windows (x64) estão disponíveis na página de [Releases](https://github.com/diogold01/mkv2mp4/releases):
 
-## 🛠️ Stack Tecnológica
+- `MKV2MP4-Setup-1.0.0.exe` (instalador NSIS)
+- `MKV2MP4-1.0.0-portable.exe` (versão portátil)
 
-- **Electron** (Processo principal com `contextIsolation: true` e `nodeIntegration: false`)
-- **Node.js** com `child_process.spawn`
-- **HTML5, CSS3 Moderno e JavaScript Vanilla** (sem frameworks externos)
-- **FFmpeg & FFprobe Estáticos** (desenvolvimento e produção via `asarUnpack`)
-- **Electron Builder** (geração de instalador NSIS e executável Portable para Windows x64)
+## Desenvolvimento e build
 
----
+Requer Node.js 18 ou superior:
 
-## 📦 Como Baixar e Usar
-
-Baixe a versão pronta para uso na aba [Releases](https://github.com/diogold01/mkv2mp4/releases):
-- **Instalador NSIS:** `MKV2MP4-Setup-1.0.0.exe` (instalação com atalho na Área de Trabalho e Menu Iniciar)
-- **Versão Portátil:** `MKV2MP4-1.0.0-portable.exe` (execução direta sem instalação)
-
----
-
-## 💻 Desenvolvimento Local
-
-### Pré-requisitos
-- Node.js 18 ou superior instalado
-- npm ou yarn
-
-### Instalação de Dependências
 ```bash
 npm install
-```
-
-### Iniciar em Modo de Desenvolvimento
-```bash
 npm start
 ```
 
----
+Para gerar o instalador e o executável portátil na pasta `dist/`:
 
-## 🔨 Compilação e Empacotamento
-
-Para gerar os executáveis na pasta `dist/`:
-
-### Compilar Ambos (Instalador NSIS + Portable)
 ```bash
 npm run build
 ```
 
-### Compilar Apenas Instalador NSIS
-```bash
-npm run build:installer
-```
+Para compilar separadamente, use `npm run build:installer` ou `npm run build:portable`. Um modelo de workflow para GitHub Actions está disponível em `workflows/build.yml`.
 
-### Compilar Apenas Versão Portátil
-```bash
-npm run build:portable
-```
+## Licença
 
-Os artefatos gerados estarão localizados em:
-- `dist/MKV2MP4-Setup-1.0.0.exe`
-- `dist/MKV2MP4-1.0.0-portable.exe`
-
----
-
-## 🤖 Integração Contínua (CI/CD)
-
-O repositório inclui um fluxo de trabalho do GitHub Actions em `.github/workflows/build.yml`. Sempre que uma tag `v*` (exemplo: `v1.0.0`) for enviada ao GitHub, o runner `windows-latest` compilará os binários e os publicará automaticamente na Release correspondente.
-
----
-
-## 📄 Licença
-
-Distribuído sob a licença MIT. Consulte `LICENSE` para obter mais informações.
+[MIT](LICENSE)

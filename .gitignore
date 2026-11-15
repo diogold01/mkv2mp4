@@ -21,3 +21,11 @@ Thumbs.db
 
 # Electron user data
 userData/
+
+# Local AI instructions and drafts
+GLOBAL_RULES.md
+GEMINI.md
+CLAUDE.md
+rules.md
+context.md
+references/

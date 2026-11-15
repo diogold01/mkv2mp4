@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Conversor rápido e moderno de vídeos MKV para MP4 para Windows",
   "main": "main.js",
-  "author": "MKV2MP4 Contributors",
+  "author": "Diogo Duarte",
   "license": "MIT",
   "scripts": {
     "start": "electron .",

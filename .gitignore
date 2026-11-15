@@ -1,8 +1,8 @@
-# Dependencies
+# Dependências
 node_modules/
 package-lock.json
 
-# Build outputs & executables
+# Build e executáveis
 dist/
 out/
 build/*.exe
@@ -13,19 +13,11 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Environment & OS files
+# Variáveis de ambiente e sistema
 .env
 .env.local
 .DS_Store
 Thumbs.db
 
-# Electron user data
+# Dados da aplicação
 userData/
-
-# Local AI instructions and drafts
-GLOBAL_RULES.md
-GEMINI.md
-CLAUDE.md
-rules.md
-context.md
-references/
